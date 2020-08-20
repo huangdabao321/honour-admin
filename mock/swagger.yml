@@ -19,7 +19,107 @@ tags:
     description: Transactions data related api.
   - name: users
     description: Users related api.
+  - name: players
+    description: 玩家信息
 paths:
+  /players:
+    get:
+      tags:
+        - players
+      summary: 获取玩家信息
+      description: 返回玩家信息列表
+      operationId: getPlayers
+      parameters: 
+        - name: acountname
+          in: query
+          description: 用于查询用户的账号
+          schema: 
+            type: string 
+        - name: nickname
+          in: query
+          description: 用于查询账户的昵称
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: 页码
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+        - name: limit
+          in: query
+          description: 每页数量
+          schema: 
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 50
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  data:
+                    type: object
+                    properties:
+                      total: 
+                        type: integer
+                        format: int32
+                      players:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Player'
+    post:
+      tags:
+        - players
+      summary: 创建玩家
+      description: 创建玩家,返回新创建玩家数据
+      operationId: createPlayer
+      security:
+        - AccessTokenAuth: []
+      parameters:
+        - name: player
+          in: query
+          required: true
+          description: 新建玩家信息
+          schema:
+            $ref: '#/components/schemas/Player'
+      responses:
+        200:
+          description: ok
+        401:
+          $ref: '#/components/responses/Unauthorized'
+  /players/{id}:
+    get:
+      tags:
+        - players
+      summary: 获取玩家信息
+      description: 返回玩家信息
+      operationId: getPlayer
+      security: 
+        - AccessTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 玩家id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/NotFound'
   /articles:
     get:
       tags:
