@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { Player, Hero,IgetPlayersRequest } from "../src/api/types";
+import { Player, Hero, IgetPlayersRequest } from "../src/api/types";
 import { heros } from "./heros";
 import faker from "faker";
 
@@ -31,11 +31,10 @@ function getWanttoplay() {
   return wanttoplay;
 }
 
-
 export const getPlayers = (req: IgetPlayersRequest, res: Response) => {
   const { acountname, nickname, page = 1, limit = 10 } = req.query;
 
-  let mockList = playerList.filter((item )=> {
+  let mockList = playerList.filter(item => {
     if (acountname && item.acountname.indexOf(acountname) < 0) return false;
     if (nickname && item.nickname.indexOf(nickname) < 0) return false;
     return true;
@@ -45,40 +44,65 @@ export const getPlayers = (req: IgetPlayersRequest, res: Response) => {
     (_, index) => index < limit * page && index >= limit * (page - 1)
   );
   return res.json({
-      code: 20000,
-      data:{
-          total: pageList.length,
-          players: pageList
-      }
-  })
+    code: 20000,
+    data: {
+      total: pageList.length,
+      players: pageList
+    }
+  });
 };
 
-
-export const getPlayer = (req: Request,res:Response)=>{
-    const {id} = req.params
-    for (const player of playerList) {
-        if(player.id.toString() === id){
-            return res.json({
-                code:20000,
-                data:{
-                    player
-                }
-            })
+export const getPlayer = (req: Request, res: Response) => {
+  const { id } = req.params;
+  for (const player of playerList) {
+    if (player.id.toString() === id) {
+      return res.json({
+        code: 20000,
+        data: {
+          player
         }
+      });
     }
+  }
 
-    return res.json({
-        code: 70001,
-        message:'player not found'
-    })
-}
+  return res.json({
+    code: 70001,
+    message: "player not found"
+  });
+};
 
-export const createPlayer = (req: Request,res: Response)=>{
-    const {player} = req.body
-    return res.json({
-        code:20000,
-        data:{
-            player
+export const createPlayer = (req: Request, res: Response) => {
+  const { player } = req.body;
+  return res.json({
+    code: 20000,
+    data: {
+      player
+    }
+  });
+};
+
+export const updatePlayer = (req: Request, res: Response) => {
+  const { player } = req.body;
+  const { id } = req.params;
+  for (const v of playerList) {
+    if (v.id.toString() === id) {
+      return res.json({
+        code: 20000,
+        data: {
+          player
         }
-    })
+      });
+    }
+  }
+
+  return res.json({
+    code: 70001,
+    message: "player not found"
+  });
+};
+
+export const deletePlayer = (req:Request,res:Response)=>{
+  return res.json({
+    code: 20000
+  })
 }

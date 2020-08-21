@@ -95,7 +95,7 @@ paths:
         200:
           description: ok
         401:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: '#/components/responses/Unauthorized'    
   /players/{id}:
     get:
       tags:
@@ -120,6 +120,64 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - players
+      summary: 修改玩家信息
+      description: 修改玩家信息,返回修改后玩家信息
+      operationId: updatePlayer
+      security:
+        - AccessTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 玩家id
+          schema:
+            type: integer
+            format: int64
+        - name: player
+          in: query
+          required: true
+          description: 要更新的玩家信息
+          schema:
+            $ref: '#/components/schemas/Player'
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/Notfound'
+    delete:
+      tags:
+        - players
+      summary: 删除玩家信息
+      description: 删除玩家信息
+      operationId: deletePlayer
+      security:
+        - AccessTokenAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 玩家id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+        401:
+          $ref: '#/components/responses/Unauthorized'
   /articles:
     get:
       tags:
