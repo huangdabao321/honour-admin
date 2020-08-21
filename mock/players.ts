@@ -46,7 +46,7 @@ export const getPlayers = (req: IgetPlayersRequest, res: Response) => {
   return res.json({
     code: 20000,
     data: {
-      total: pageList.length,
+      total: playerList.length,
       players: pageList
     }
   });

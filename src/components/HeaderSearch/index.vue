@@ -113,7 +113,7 @@ export default class extends Vue {
       threshold: 0.4,
       location: 0,
       distance: 100,
-      maxPatternLength: 32,
+      // maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [{
         name: 'title',
@@ -168,7 +168,7 @@ export default class extends Vue {
   private querySearch(query: string) {
     if (query !== '') {
       if (this.fuse) {
-        this.options = this.fuse.search(query).map((result) => result.item)
+        this.options = this.fuse.search(query).map((result: { item: any }) => result.item)
       }
     } else {
       this.options = []

@@ -9,6 +9,8 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import { playerRoutes } from './modules/players'
+
 
 Vue.use(Router)
 
@@ -203,6 +205,7 @@ export const asyncRoutes: RouteConfig[] = [
   componentsRouter,
   chartsRouter,
   nestedRouter,
+  playerRoutes,
   tableRouter,
   {
     path: '/example',
