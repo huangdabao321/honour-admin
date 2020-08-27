@@ -1,12 +1,15 @@
 export default {
   player:{
     acountname:'请输入用户账号',
-    btnFilter:'查询'
+    btnFilter:'查询',
+    btnCreate: '添加玩家'
   },
 
   route: {
+    editPlayer:'编辑玩家',
     playerMgt: "玩家管理",
     playerList: "玩家列表",
+    createPlayer: "添加玩家",
     dashboard: "首页",
     documentation: "文档",
     guide: "引导页",

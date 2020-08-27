@@ -17,6 +17,15 @@
           $t("player.btnFilter")
         }}
       </el-button>
+      <el-button
+        type="success"
+        icon="el-icon-add"
+        @click="handlerCreatePlayer"
+      >
+        {{
+          $t("player.btnCreate")
+        }}
+      </el-button>
     </div>
     <el-table
       v-loading="loading"
@@ -38,6 +47,26 @@
           {{ row.acountname }}
         </template>
       </el-table-column>
+      <el-table-column
+        label="操作"
+      >
+        <template v-slot="scope">
+          <router-link :to="'/players/edit/'+ scope.row.id">
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+            >
+              编辑
+            </el-button>
+          </router-link>
+          <el-button
+            type="danger"
+            @click="handlerDelete(scope)"
+          >
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <Pagination
       v-show="total>0"
@@ -54,6 +83,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getPlayers } from '@/api/players'
 import { Player } from '@/api/types'
 import Pagination from '@/components/Pagination/index.vue'
+import { deleteUser } from '@/api/users'
 @Component({
   name: 'PlayList',
   components: {
@@ -85,6 +115,26 @@ export default class extends Vue {
   handlerFilter() {
     this.listQuery.page = 1
     this.getList()
+  }
+
+  handlerCreatePlayer() {
+    this.$router.push('/players/create')
+  }
+
+  handlerDelete(scope:any) {
+    const { $index, row } = scope
+    this.$confirm('确定删除玩家信息?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async() => {
+      await deleteUser(row.id)
+      this.list.splice($index, 1)
+      this.$message({
+        type: 'success',
+        message: '删除成功'
+      })
+    }).catch(err => console.log(err))
   }
 }
 </script>

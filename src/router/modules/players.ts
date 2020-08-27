@@ -7,7 +7,7 @@ export const playerRoutes: RouteConfig = {
   redirect: "/player/list",
   meta: {
     title: "playerMgt", //i18n
-    icon: "player" 
+    icon: "player"
   },
   children: [
     {
@@ -17,6 +17,26 @@ export const playerRoutes: RouteConfig = {
       meta: {
         title: "playerList",
         icon: "list"
+      }
+    },
+    {
+      path: "create",
+      component: () => import("@/views/player/createPlayer.vue"),
+      name: "createPlayer",
+      meta: {
+        title: "createPlayer",
+        icon: "edit"
+      }
+    },
+    {
+      path: "edit/:id(\\d+)",
+      component: () => import("@/views/player/edit.vue"),
+      name: "editPlayer",
+      meta: {
+        title: "editPlayer",
+        noCache: true,
+        activeMenu: "/players/list",
+        hidden: true
       }
     }
   ]
