@@ -2,7 +2,7 @@ name: Build app and deploy to aliyun
 on:
   push:
     branches:
-      - ci-test
+      - master
 jobs:
   build:
     # runs-on 指定job任务运⾏所需要的虚拟机环境(必填字段)
