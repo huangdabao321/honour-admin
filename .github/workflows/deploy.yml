@@ -40,3 +40,20 @@ jobs:
         REMOTE_USER: "root"
         #目标地址
         TARGET: "/data/wwwroot/honour-admin/client"
+    - name: API build
+      run: cd mock && tsc -P tsconfig.json && cp swagger.yml ./dist && cp package.json ./dist
+    - name: deploy to aliyun
+      uses: easingthemes/ssh-deploy@v2.1.1
+      env:
+        # 私钥
+        SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        # scp参数
+        ARGS: "-avzr --delete"
+        # 源⽬录
+        SOURCE: "./mock/dist"
+        # 服务器ip：换成你的服务器IP
+        REMOTE_HOST: ${{ secrets.SERVER_ID }}
+        # ⽤户
+        REMOTE_USER: "root"
+        #目标地址
+        TARGET: "/data/wwwroot/honour-admin/server" 
