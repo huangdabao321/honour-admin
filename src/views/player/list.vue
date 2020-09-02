@@ -42,7 +42,7 @@
           {{ row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="账号1">
+      <el-table-column label="账号">
         <template v-slot="{row}">
           {{ row.acountname }}
         </template>

@@ -35,7 +35,7 @@ jobs:
         # 源⽬录
         SOURCE: "dist"
         # 服务器ip：换成你的服务器IP
-        REMOTE_HOST: "101.200.240.28"
+        REMOTE_HOST: ${{ secrets.SERVER_ID }}
         # ⽤户
         REMOTE_USER: "root"
         #目标地址
